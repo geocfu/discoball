@@ -1,23 +1,54 @@
 import Discord from 'discord.js';
+import fs from 'graceful-fs';
+
 import { Config } from './config';
+import { commands } from './commands';
 
 const client = new Discord.Client();
+
+client.login(Config.token);
 
 client.once('ready', () => {
   console.log('Ready!');
 });
 
-client.on('message', async message => {
-  //"You summoned me wrongly! Try calling me by using my prefix. (a.k.a '?')"
-  if (!message.content.startsWith(Config.prefix) || message.author.bot) return;
+client.on('shardError', error => {
+  console.error('A websocket connection encountered an error:', error);
+});
 
-  const args = message.content.slice(Config.prefix.length).trim().split(/ +/);
+client.on('error', (error) => {
+  throw error;
+});
 
-  if (!args.length) return;
+client.on('message', handleMessage);
+
+async function handleMessage(message: Discord.Message): Promise<Discord.Message | void> {
+  const initCommand = Config.prefix + Config.callsign;
+
+  if (!message.content.startsWith(initCommand) || message.author.bot) return;
+
+  const args: string[] = message.content.slice(initCommand.length).trim().split(/ +/);
+
+  console.log("ARGS", args);
 
   const command = args.shift().toLowerCase();
 
-  // based on command, respond accordingly
-});
+  switch (command) {
+    case 'help':
+      commands.Help.execute(message);
+      break;
+    case 'play':
+      commands.Play.execute(message, args);
+      break;
+    case 'queue':
+      break;
+    case 'version':
+      commands.Version.execute(message, client);
+      break;
 
-client.login(Config.token);
+    default:
+      commands.NoArgs.execute(message, client);
+      break;
+  }
+
+}

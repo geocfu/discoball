@@ -9,4 +9,6 @@ export class Config {
   public static readonly token = env.get('TOKEN').required().asString();
 
   public static readonly prefix = env.get('PREFIX').required().asString();
+
+  public static readonly callsign = env.get('CALLSIGN').required().asString();
 }

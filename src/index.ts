@@ -51,6 +51,8 @@ async function handleMessage(message: Discord.Message): Promise<Discord.Message>
   const command = args.shift().toLowerCase();
 
   try {
+    if (!commands.has(command)) return commands.get('uknown-args').execute(message);
+
     return commands.get(command).execute(message, args, client);
   } catch (error) {
     throw error;

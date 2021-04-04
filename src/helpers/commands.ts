@@ -38,7 +38,7 @@ export async function getCommandNames(): Promise<string[]> {
     for (const _folder of commandFolders) {
       const commandFiles = await fs.promises
         .readdir(`./src/commands/${_folder}`)
-        .then((files) => files.filter(file => file.endsWith('.ts') && file !== 'no-args.ts'));
+        .then((files) => files.filter(file => file.endsWith('.ts') && file !== 'no-args.ts' && file !== 'uknown-args.ts'));
 
       for (const _file of commandFiles) {
         const command = _file.toLowerCase().slice(0, -3);

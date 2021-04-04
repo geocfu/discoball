@@ -12,7 +12,7 @@ const help: Command = {
     const availableCommands = await getCommandNames();
 
     const content =
-      `:helmet_with_cross: **Help Page** \n` +
+      `:helmet_with_cross: **Help Page** \n\n` +
       `The list of available commands is: \`${availableCommands.join(', ')}\``;
 
     const reply = replyAsMultilineBlockQuote(content);

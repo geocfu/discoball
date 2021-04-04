@@ -41,8 +41,8 @@ export async function getCommandNames(): Promise<string[]> {
         .then((files) => files.filter(file => file.endsWith('.ts') && file !== 'no-args.ts' && file !== 'uknown-args.ts'));
 
       for (const _file of commandFiles) {
-        const command = _file.toLowerCase().slice(0, -3);
-        commandNames.push(command);
+        const command = await import(`../commands/${_folder}/${_file}`) as Command;
+        commandNames.push(command.name);
       }
     }
 

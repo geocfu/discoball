@@ -35,6 +35,9 @@ async function handleMessage(message: Discord.Message): Promise<Discord.Message>
   // Our prefix and callsign
   const initCommand = Config.prefix + Config.callsign;
 
+  // I the message did not come from a guild (server), ingore it
+  if (!message.guild) return;
+
   // Without initCommand, the user simply did not summon the Bot
   if (!message.content.startsWith(initCommand) || message.author.bot) return;
 

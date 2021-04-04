@@ -1,24 +1,35 @@
 import Discord from 'discord.js';
+import axios from 'axios';
 
 import { Config } from '../../config';
-
+import { Command } from '../../types/Command';
 import { replyAsMultilineBlockQuote } from '../../helpers/replies';
+import { Gihub } from '../../types/gihub/Gihub';
 
-export class Version {
-  public static readonly command: string = 'version';
-  public static readonly description: string = 'Dsiplay current running Bot info';
+const version: Command = {
+  name: 'version',
+  description: 'Display current running Bot version',
+  cooldown: 10,
 
-  public static execute(message: Discord.Message, client: Discord.Client): Promise<Discord.Message> {
-    const initCommand = Config.prefix + Config.callsign;
+  async execute(message: Discord.Message) {
+    try {
+      const initCommand = Config.prefix + Config.callsign;
 
-    //axios call to https://api.github.com/repos/geocfu/diskompala/releases/latest
+      const lattestVersion = await axios.get<Gihub>('https://api.github.com/repos/geocfu/diskompala/releases/latest');
+      console.log(lattestVersion);
 
-    const content =
-      `:clock3: Current running version is, vTODO\n\n` +
-      `For a list of all the available commands use \`${initCommand} help\`.\n`;
+      const content =
+        `:clock3: Current running version is, vTODO\n\n` +
+        `For a list of all the available commands use \`${initCommand} help\`.\n`;
 
-    const reply = replyAsMultilineBlockQuote(content);
+      const reply = replyAsMultilineBlockQuote(content);
 
-    return message.channel.send(reply);
+      return message.channel.send(reply);
+
+    } catch (error) {
+      throw error;
+    }
   }
-};
+}
+
+export = version;

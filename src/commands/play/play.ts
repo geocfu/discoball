@@ -1,18 +1,17 @@
 import Discord from 'discord.js';
 
-import { Config } from '../../config';
-
+import { Command } from '../../types/Command';
 import { replyAsMultilineBlockQuote } from '../../helpers/replies';
 
-export class Play {
-  public static readonly command: string = Config.prefix + Config.callsign;
-  public static readonly description: string = 'Default no argument response';
+const play: Command = {
+  name: 'play',
+  description: 'Play a song from the givven URL.',
+  cooldown: 5,
 
-  public static execute(message: Discord.Message, args: string[]): Promise<Discord.Message> {
-
+  async execute(message: Discord.Message, args: string[]) {
     const sender = `<@${message.author.id}>`;
 
-    const content = `play song`;
+    const content = `i am not yet ready, hehehe`;
     console.log(args);
 
 
@@ -20,4 +19,6 @@ export class Play {
 
     return message.channel.send(reply);
   }
-};
+}
+
+export = play;

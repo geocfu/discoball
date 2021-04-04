@@ -1,14 +1,14 @@
 import Discord from 'discord.js';
 
 import { Config } from '../../config';
-
+import { Command } from '../../types/Command';
 import { replyAsMultilineBlockQuote } from '../../helpers/replies';
 
-export class NoArgs {
-  public static readonly command: string = Config.prefix + Config.callsign;
-  public static readonly description: string = 'Default no argument response';
+const noArgs: Command = {
+  name: 'no-args',
+  description: 'Default no argument response.',
 
-  public static execute(message: Discord.Message, client: Discord.Client): Promise<Discord.Message> {
+  async execute(message: Discord.Message, args?: string[], client?: Discord.Client) {
     const initCommand = Config.prefix + Config.callsign;
     const sender = `<@${message.author.id}>`;
 
@@ -23,4 +23,6 @@ export class NoArgs {
 
     return message.channel.send(reply);
   }
-};
+}
+
+export = noArgs;

@@ -1,19 +1,24 @@
 import Discord from 'discord.js';
-import { getAvailableCommands } from '../../helpers/commands';
 
+import { Command } from '../../types/Command';
 import { replyAsMultilineBlockQuote } from '../../helpers/replies';
+import { getCommandNames } from '../../helpers/commands';
 
-export class Help {
-  public static readonly command: string = 'help';
-  public static readonly description: string = 'Display the Help Page.';
+const help: Command = {
+  name: 'help',
+  description: 'Display the Help Page.',
 
-  public static async execute(message: Discord.Message, args?: string[]) {
+  async execute(message: Discord.Message, args?: string[], client?: Discord.Client) {
+    const availableCommands = await getCommandNames();
+
     const content =
       `:helmet_with_cross: **Help Page** \n` +
-      `The list of available commands is: \`${await getAvailableCommands()}\``;
+      `The list of available commands is: \`${availableCommands.join(', ')}\``;
 
     const reply = replyAsMultilineBlockQuote(content);
 
     return message.channel.send(reply);
   }
-};
+}
+
+export = help;

@@ -1,7 +1,7 @@
 import { Author } from './Author';
 import { Asset } from './Asset';
 
-export interface Gihub {
+export interface GitHub {
   url?: string;
   assets_url?: string;
   upload_url?: string;

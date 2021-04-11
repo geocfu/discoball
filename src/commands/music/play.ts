@@ -1,6 +1,5 @@
 import Discord from 'discord.js';
 import ytdl from 'ytdl-core';
-import fs from 'graceful-fs';
 
 import { Command } from '../../types/Command';
 import { replyAsMultilineBlockQuote } from '../../helpers/replies';

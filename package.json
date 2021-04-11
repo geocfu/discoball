@@ -6,9 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts",
-    "build": "rimraf dist && tsc -p .",
-    "watch": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "watch": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "prod": "ts-node --transpile-only src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -43,6 +42,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "erlpack": "github:discord/erlpack",
+    "ffmpeg-static": "^4.3.0",
     "graceful-fs": "^4.2.6",
     "sodium": "^3.0.2",
     "utf-8-validate": "^5.0.4",
